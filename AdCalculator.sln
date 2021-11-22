@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdvertisementAPI", "AdCalculator\AdvertisementAPI.csproj", "{0D59BBBE-0634-47EC-988C-12E9EAAA62E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdvertisementLibrary", "AdvertisementLibrary\AdvertisementLibrary.csproj", "{B6600D5F-E0F5-4069-BA0A-532BC0EA335D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest.AdvertisementCalculation", "AdvertisementCalculation.UnitTest\UnitTest.AdvertisementCalculation.csproj", "{1FD6F0AA-03D4-4368-A5C1-4C329FAF920C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0D59BBBE-0634-47EC-988C-12E9EAAA62E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D59BBBE-0634-47EC-988C-12E9EAAA62E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D59BBBE-0634-47EC-988C-12E9EAAA62E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D59BBBE-0634-47EC-988C-12E9EAAA62E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6600D5F-E0F5-4069-BA0A-532BC0EA335D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6600D5F-E0F5-4069-BA0A-532BC0EA335D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6600D5F-E0F5-4069-BA0A-532BC0EA335D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6600D5F-E0F5-4069-BA0A-532BC0EA335D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FD6F0AA-03D4-4368-A5C1-4C329FAF920C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FD6F0AA-03D4-4368-A5C1-4C329FAF920C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FD6F0AA-03D4-4368-A5C1-4C329FAF920C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FD6F0AA-03D4-4368-A5C1-4C329FAF920C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BF87F595-3A39-4D04-984B-F7CF7E1D13F0}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 4
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://houseoftravel.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = AdCalculator\\AdvertisementAPI.csproj
+		SccProjectName1 = AdCalculator
+		SccLocalPath1 = AdCalculator
+		SccProjectUniqueName2 = AdvertisementCalculation.UnitTest\\UnitTest.AdvertisementCalculation.csproj
+		SccProjectName2 = AdvertisementCalculation.UnitTest
+		SccLocalPath2 = AdvertisementCalculation.UnitTest
+		SccProjectUniqueName3 = AdvertisementLibrary\\AdvertisementLibrary.csproj
+		SccProjectName3 = AdvertisementLibrary
+		SccLocalPath3 = AdvertisementLibrary
+	EndGlobalSection
+EndGlobal
