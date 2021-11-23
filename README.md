@@ -11,10 +11,34 @@ AdCalculatorAPI
 * [ ] Refacrtoring into Repository-Service Pattern with SQL Advertisement Repository
 
 ## API Information
+  Sample Input/Output
+  ![RequestInputOutput](https://user-images.githubusercontent.com/46036272/142950642-ff060745-8561-455f-aca6-0954f24ca0f4.png)
 
-![APIInfo](https://user-images.githubusercontent.com/46036272/142980445-3566c198-6cec-45f2-9544-f32f68d1b9ea.JPG)
+### Body Parameters
+#### Collection of [Advertisement](http:)
+|Name           |Type                                |
+|---------------|------------------------------------|
+|Id             | integer                            |
+|Length         | integer                            |
+|Type           | [Advertisement Type]()        |
+|Station        | [Radio Station]()             |
+
+
+#### Advertisement Type
+Possible enumeration values:
+|Name           |Value                         |
+|---------------|------------------------------|
+|Video          | 0                            |
+|Radio          | 1                            |
+
+#### Radio Station
+Possible enumeration values:
+
+|Name           |Value                         |
+|---------------|------------------------------|
+|STAR_WARS_FM   | 0                            |
+|PLAINS_MEN_FM  | 1                            |
+|OTHER          | 2                            |
 
 
 
-Sample Input/Output
-![RequestInputOutput](https://user-images.githubusercontent.com/46036272/142950642-ff060745-8561-455f-aca6-0954f24ca0f4.png)
