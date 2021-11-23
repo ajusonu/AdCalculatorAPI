@@ -1,7 +1,7 @@
 # AdCalculatorAPI
 AdCalculatorAPI
 
-## Calculate the price of given list of advertisements based on its Length, Type and Station of Advertisement.
+#### Calculate the price of given list of advertisements based on their Length(in Seconds), Type (Radio/Video) and Radio Station of Advertisement.
 
 <!-- Task List -->
 * [X] Class Library Created
