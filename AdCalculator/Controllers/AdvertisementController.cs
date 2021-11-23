@@ -20,7 +20,7 @@ namespace AdCalculator.Controllers
         /// </summary>
         /// <param name="advertisements"></param>
         [HttpPost]
-        [Route("api/Advertisement/Process")]
+        [Route("api/adcalculator")]
         public async Task<HttpResponseMessage> ProcessAdvertisementCalculation(List<Advertisement> advertisements)
         {
             HttpResponseMessage response;

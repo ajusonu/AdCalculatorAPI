@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdvertisementLibrary.Model
 {
-    public class Advertisement : BaseCalculation
+    public class Advertisement : CalculationConstantValue
     {
         public int Id { get; set; }
         /// <summary>

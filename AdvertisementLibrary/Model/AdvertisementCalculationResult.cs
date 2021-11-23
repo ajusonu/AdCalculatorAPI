@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AdvertisementLibrary.Model
 {
-    public class AdvertisementCalculationResult : BaseCalculation
+    public class AdvertisementCalculationResult : CalculationConstantValue
     {
 
         /// <summary>

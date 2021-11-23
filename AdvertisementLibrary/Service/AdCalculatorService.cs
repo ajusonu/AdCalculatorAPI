@@ -1,4 +1,5 @@
 ﻿using AdvertisementLibrary.Common;
+using AdvertisementLibrary.Constants;
 using AdvertisementLibrary.Enums;
 using AdvertisementLibrary.Model;
 using System;
@@ -12,7 +13,7 @@ namespace AdvertisementLibrary.Service
     /// <summary>
     /// Advertisement Calculator Service
     /// </summary>
-    public class AdCalculatorService : BaseCalculation, IBaseAdCalculatorService, IValidor
+    public class AdCalculatorService : IBaseAdCalculatorService, IValidor
     {
         private List<Advertisement> _Advertisements;
         private AdvertisementCalculationResult _AdvertisementCalculationResult;
@@ -86,7 +87,7 @@ namespace AdvertisementLibrary.Service
             decimal totalAdvertisementRunningCharge = 0;
             foreach (Advertisement advertisement in _Advertisements)
             {
-                totalAdvertisementRunningCharge += await GetChargePerSecond(advertisement.Length)* advertisement.Length;
+                totalAdvertisementRunningCharge += await new AdvertisementLengthRuleDictionary().GetChargeRate(advertisement.Length)* advertisement.Length;
             }
             _AdvertisementCalculationResult.TotalRunningCharge = totalAdvertisementRunningCharge;
             return;
@@ -103,9 +104,9 @@ namespace AdvertisementLibrary.Service
             {
                 foreach (Advertisement advertisement in _Advertisements)
                 {
-                    if (!advertisement.Length.IsInRange(MIN_Advertisement_LENGTH_IN_SECONDS, MAX_Advertisement_LENGTH_IN_SECONDS))
+                    if (!advertisement.Length.IsInRange(AdConstant.MIN_LENGTH_IN_SECONDS, AdConstant.MAX_LENGTH_IN_SECONDS))
                     {
-                        _AdvertisementCalculationResult.Errors.Add($"Advertisement Id {advertisement.Id} Length {advertisement.Length} is invalid. Range is {MIN_Advertisement_LENGTH_IN_SECONDS} to {MAX_Advertisement_LENGTH_IN_SECONDS} ");
+                        _AdvertisementCalculationResult.Errors.Add($"Advertisement Id {advertisement.Id} Length {advertisement.Length} is invalid. Range is {AdConstant.MIN_LENGTH_IN_SECONDS} to {AdConstant.MAX_LENGTH_IN_SECONDS} ");
                         isValid = false;
                     }
                     if (advertisement.Type == AdvertisementType.Video && advertisement.Station != null)
@@ -144,10 +145,10 @@ namespace AdvertisementLibrary.Service
             switch (advertisementType)
             {
                 case AdvertisementType.Video:
-                    levyChargePerAdvertisement = VIDEO_LEVY_CHARGE_PER_Advertisement;
+                    levyChargePerAdvertisement = AdConstant.VIDEO_LEVY_CHARGE_PER_AD;
                     break;
                 case AdvertisementType.Radio:
-                    levyChargePerAdvertisement = RADIO_LEVY_CHARGE_PER_Advertisement;
+                    levyChargePerAdvertisement = AdConstant.RADIO_LEVY_CHARGE_PER_AD;
                     break;
                 default:
                     levyChargePerAdvertisement = 0;
@@ -156,21 +157,7 @@ namespace AdvertisementLibrary.Service
 
             return await Task.FromResult(levyChargePerAdvertisement);
         }
-        /// <summary>
-        /// Get Charge Per Second
-        /// </summary>
-        /// <param name="advertisement"></param>
-        /// <returns></returns>
-        private async Task<decimal> GetChargePerSecond(int advertisementLength)
-        {
-            decimal chargePerSecond;
-
-            chargePerSecond = (await Task.FromResult(advertisementLength.IsInRange(5, 30))) ? 1.25m : 0;
-            chargePerSecond = (await Task.FromResult(advertisementLength.IsInRange(31, 60))) ? 1.15m : chargePerSecond;
-            chargePerSecond = (await Task.FromResult(advertisementLength.IsInRange(61, 180))) ? 0.95m : chargePerSecond;
-
-            return chargePerSecond;
-        }
+      
         /// <summary>
         /// Based on Distinct Radio Stations in Adversitement List Get Total One Type Cost
         /// </summary>
@@ -185,13 +172,13 @@ namespace AdvertisementLibrary.Service
                 switch (radioStation)
                 {
                     case RadioStation.STAR_WARS_FM:
-                        totalRadioStationSubcriptionCharge += RADIO_STAR_WARS_FM_CHARGE;
+                        totalRadioStationSubcriptionCharge += AdConstant.RADIO_STAR_WARS_FM_CHARGE;
                         break;
                     case RadioStation.PLAINS_MEN_FM:
-                        totalRadioStationSubcriptionCharge += RADIO_PLAINS_MEN_FM_CHARGE;
+                        totalRadioStationSubcriptionCharge += AdConstant.RADIO_PLAINS_MEN_FM_CHARGE;
                         break;
                     default:
-                        totalRadioStationSubcriptionCharge += RADIO_OTHER_CHARGE;
+                        totalRadioStationSubcriptionCharge += AdConstant.RADIO_OTHER_CHARGE;
                         break;
                 }
             }
