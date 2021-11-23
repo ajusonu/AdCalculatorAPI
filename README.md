@@ -12,7 +12,8 @@ AdCalculatorAPI
 
 ## API Information
 
-https://github.com/ajusonu/AdCalculatorAPI/blob/main/README.md
+![APIInfo](https://user-images.githubusercontent.com/46036272/142980445-3566c198-6cec-45f2-9544-f32f68d1b9ea.JPG)
+
 
 
 Sample Input/Output
