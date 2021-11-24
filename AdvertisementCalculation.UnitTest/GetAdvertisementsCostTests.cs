@@ -15,11 +15,10 @@ namespace UnitTest.AdvertisementCalculation
     public class GetAdvertisementsCostTests
     {
         /// <summary>
-        /// Pass the data rows to test
+        /// Test method
         /// </summary>
         [TestMethod]
-        //[DataRow(new List<Advertisement>().Add(new Advertisement() { Id = 1, Length = 45, Station = RadioStation.PLAINS_MEN_FM, Type = AdvertisementType.Radio })), ]
-        public async Task TestMethod_CalculatePrice()
+        public async Task TestMethod_PerformCalculation_InValid()
         {
             //arrange
             List<Advertisement> advertisements = new List<Advertisement>()
@@ -32,14 +31,64 @@ namespace UnitTest.AdvertisementCalculation
             advertisements.Add(new Advertisement() { Id = 3, Length = 1, Type = AdvertisementType.Video });
             advertisements.Add(new Advertisement() { Id = 3, Length = 1, Type = AdvertisementType.Video, Station = RadioStation.OTHER });
 
-            AdCalculatorService adCalculatorService = new AdCalculatorService();
+            AdCalculatorService adCalculatorService = new AdCalculatorService(advertisements);
 
             //action
+            AdvertisementCalculationResult result = await adCalculatorService.PerformCalculation();
 
-            AdvertisementCalculationResult result =await adCalculatorService.CalculatePrice(advertisements);
+            //Assert
+            Assert.AreEqual(result.TotalPrice, 0m);
 
-            //assert
-            Assert.IsNotNull(result);
+        }
+        /// <summary>
+        /// Valid test with one Video and one Radio
+        /// </summary>
+        /// <returns></returns>
+        [TestMethod]
+        public async Task TestMethod_PerformCalculation_Valid()
+        {
+            //arrange
+            List<Advertisement> advertisements = new List<Advertisement>()
+            {
+
+            };
+
+            advertisements.Add(new Advertisement() { Id = 1, Length = 10, Station = RadioStation.STAR_WARS_FM, Type = AdvertisementType.Radio });
+            advertisements.Add(new Advertisement() { Id = 2, Length = 100, Type = AdvertisementType.Video });
+            
+            AdCalculatorService adCalculatorService = new AdCalculatorService(advertisements);
+
+            //action
+            AdvertisementCalculationResult result = await adCalculatorService.PerformCalculation();
+
+            //Assert
+            Assert.AreEqual(result.TotalPrice, 113.75m);
+
+        }
+        /// <summary>
+        /// Valid test with two Video 1 with Radio Station to test warning 
+        /// </summary>
+        /// <returns></returns>
+        [TestMethod]
+        public async Task TestMethod_PerformCalculation_Valid_2Video_1InvalidVideo()
+        {
+            //arrange
+            List<Advertisement> advertisements = new List<Advertisement>()
+            {
+
+            };
+
+            advertisements.Add(new Advertisement() { Id = 1, Length = 10, Station = RadioStation.STAR_WARS_FM, Type = AdvertisementType.Video });
+            advertisements.Add(new Advertisement() { Id = 2, Length = 100, Type = AdvertisementType.Video });
+
+            AdCalculatorService adCalculatorService = new AdCalculatorService(advertisements);
+
+            //action
+            AdvertisementCalculationResult result = await adCalculatorService.PerformCalculation();
+
+            //Assert
+            Assert.AreEqual(result.TotalPrice, 112m);
+            Assert.IsTrue(result.Warnings.Count > 0);
 
         }
     }

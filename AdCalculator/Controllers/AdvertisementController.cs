@@ -27,7 +27,7 @@ namespace AdCalculator.Controllers
             string errorContent = "";
             try
             {
-                AdvertisementCalculationResult advertisementCalculationResult = await (new AdCalculatorService()).CalculatePrice(advertisements);
+                AdvertisementCalculationResult advertisementCalculationResult = await (new AdCalculatorService(advertisements)).PerformCalculation();
                 string errorList = advertisementCalculationResult?.Errors.Count() > 0 ? $"Error List:{Environment.NewLine}{ string.Join(Environment.NewLine, advertisementCalculationResult.Errors)}" : string.Empty;
                 string warningList = advertisementCalculationResult?.Warnings.Count() > 0 ? $"Warning List:{Environment.NewLine}{ string.Join(Environment.NewLine, advertisementCalculationResult.Warnings)}" : string.Empty;
 

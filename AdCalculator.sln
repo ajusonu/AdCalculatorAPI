@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdvertisementAPI", "AdCalculator\AdvertisementAPI.csproj", "{0D59BBBE-0634-47EC-988C-12E9EAAA62E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdvertisementLibrary", "AdvertisementLibrary\AdvertisementLibrary.csproj", "{B6600D5F-E0F5-4069-BA0A-532BC0EA335D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdvertisementLibrary", "AdvertisementLibrary\AdvertisementLibrary.csproj", "{B6600D5F-E0F5-4069-BA0A-532BC0EA335D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest.AdvertisementCalculation", "AdvertisementCalculation.UnitTest\UnitTest.AdvertisementCalculation.csproj", "{1FD6F0AA-03D4-4368-A5C1-4C329FAF920C}"
 EndProject

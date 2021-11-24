@@ -13,91 +13,25 @@ namespace AdvertisementLibrary.Service
     /// <summary>
     /// Advertisement Calculator Service
     /// </summary>
-    public class AdCalculatorService : IBaseAdCalculatorService, IValidor
+    public class AdCalculatorService : BaseAdCalculatorService
     {
         private List<Advertisement> _Advertisements;
         private AdvertisementCalculationResult _AdvertisementCalculationResult;
 
         /// <summary>
-        /// Calculate Price for given payload
+        /// constractor to receive payload
         /// </summary>
         /// <param name="advertisements"></param>
-        /// <returns></returns>
-        public async Task<AdvertisementCalculationResult> CalculatePrice(List<Advertisement> advertisements)
-        {
-            Initialize(advertisements);
-            if (await Validate())
-            {
-                await PerformCalculation();
-            }
-            return await Task.FromResult(_AdvertisementCalculationResult);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="advertisements"></param>
-        private void Initialize(List<Advertisement> advertisements)
+        public AdCalculatorService(List<Advertisement> advertisements)
         {
             _AdvertisementCalculationResult = new AdvertisementCalculationResult(advertisements);
             _Advertisements = advertisements;
         }
-
-        /// <summary>
-        /// Perform Calculatin based on the Business logic
-        /// </summary>
-        private async Task<bool> PerformCalculation()
-        {
-            try
-            {
-                await CalculateAdvertisementRunningCharge();
-                await CalculateTotalLevyCharge();
-                await GetTotalRadioStationOneOffCharges();
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Failed {ex.Message} in  inside {System.Reflection.MethodBase.GetCurrentMethod().DeclaringType}");
-                _AdvertisementCalculationResult.Errors.Add($"Advertisement calculation failed");
-                return await Task.FromResult(false);
-            }
-            return await Task.FromResult(true);
-        }
-        /// <summary>
-        /// Calculate Total Levy Charge per Advertisement
-        /// </summary>
-        /// <param name="advertisementCost"></param>
-        /// <returns></returns>
-        private async Task CalculateTotalLevyCharge()
-        {
-            decimal totalLevyCharge = 0;
-            foreach (Advertisement advertisement in _Advertisements)
-            {
-                totalLevyCharge += await GetLevyCharge(advertisement.Type);
-            }
-            _AdvertisementCalculationResult.TotalLevyCharge = totalLevyCharge;
-            return;
-        }
-        /// <summary>
-        /// Calculate Total Advertisement Running Charge based on Advertisements Price and Length
-        /// </summary>
-        /// <param name="advertisementCost"></param>
-        /// <returns></returns>
-        private async Task CalculateAdvertisementRunningCharge()
-        {
-            decimal totalAdvertisementRunningCharge = 0;
-            foreach (Advertisement advertisement in _Advertisements)
-            {
-                totalAdvertisementRunningCharge += await new AdvertisementLengthRuleDictionary().GetChargeRate(advertisement.Length)* advertisement.Length;
-            }
-            _AdvertisementCalculationResult.TotalRunningCharge = totalAdvertisementRunningCharge;
-            return;
-        }
-
         /// <summary>
         /// Validate payload for given criteria
         /// </summary>
         /// <returns></returns>
-        public async Task<bool> Validate()
+        override protected async Task<bool> Validate()
         {
             bool isValid = true;
             try
@@ -135,6 +69,61 @@ namespace AdvertisementLibrary.Service
             return await Task.FromResult(isValid);
         }
         /// <summary>
+        /// Perform Calculatin based on the Business logic
+        /// </summary>
+        override public async Task<AdvertisementCalculationResult> PerformCalculation()
+        {
+            try
+            {
+                if (await Validate())
+                {
+                    await CalculateAdvertisementRunningCharge();
+                    await CalculateTotalLevyCharge();
+                    await GetTotalRadioStationOneOffCharges();
+                }
+         
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed {ex.Message} in  inside {System.Reflection.MethodBase.GetCurrentMethod().DeclaringType}");
+                _AdvertisementCalculationResult.Errors.Add($"Advertisement calculation failed");
+            }
+            return await Task.FromResult(_AdvertisementCalculationResult);
+        }
+       
+        /// <summary>
+        /// Calculate Total Levy Charge per Advertisement
+        /// </summary>
+        /// <param name="advertisementCost"></param>
+        /// <returns></returns>
+        public async Task CalculateTotalLevyCharge()
+        {
+            decimal totalLevyCharge = 0;
+            foreach (Advertisement advertisement in _Advertisements)
+            {
+                totalLevyCharge += await GetLevyCharge(advertisement.Type);
+            }
+            _AdvertisementCalculationResult.TotalLevyCharge = totalLevyCharge;
+            return;
+        }
+        /// <summary>
+        /// Calculate Total Advertisement Running Charge based on Advertisements Price and Length
+        /// </summary>
+        /// <param name="advertisementCost"></param>
+        /// <returns></returns>
+        public async Task CalculateAdvertisementRunningCharge()
+        {
+            decimal totalAdvertisementRunningCharge = 0;
+            foreach (Advertisement advertisement in _Advertisements)
+            {
+                totalAdvertisementRunningCharge += await new AdvertisementLengthRuleDictionary().GetChargeRate(advertisement.Length)* advertisement.Length;
+            }
+            _AdvertisementCalculationResult.TotalRunningCharge = totalAdvertisementRunningCharge;
+            return;
+        }
+
+        
+        /// <summary>
         /// Get Levy Charge
         /// </summary>
         /// <param name="advertisement"></param>
@@ -163,12 +152,13 @@ namespace AdvertisementLibrary.Service
         /// </summary>
         /// <param name="radioStations"></param>
         /// <returns></returns>
-        private async Task<bool> GetTotalRadioStationOneOffCharges()
+        public async Task GetTotalRadioStationOneOffCharges()
         {
 
             decimal totalRadioStationSubcriptionCharge = 0;
-            foreach (RadioStation radioStation in await Task.FromResult(_Advertisements.FindAll(a => a.Station != null).GroupBy(r => r.Station).Select(g => g.Key).ToList()))
+            foreach (RadioStation radioStation in await Task.FromResult(_Advertisements.FindAll(a => a.Station != null && a.Type != AdvertisementType.Video).GroupBy(r => r.Station).Select(g => g.Key).ToList()))
             {
+
                 switch (radioStation)
                 {
                     case RadioStation.STAR_WARS_FM:
@@ -183,7 +173,10 @@ namespace AdvertisementLibrary.Service
                 }
             }
             _AdvertisementCalculationResult.TotalRadioStationSubcriptionCharge = totalRadioStationSubcriptionCharge;
-            return await Task.FromResult(true);
+            return;
         }
+
+        
+
     }
 }

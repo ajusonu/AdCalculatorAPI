@@ -12,6 +12,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Model\CalculationConstantValue.cs" />
+    <Compile Remove="Model\IValidor.cs" />
     <Compile Remove="Service\AdsCalculator.cs" />
     <Compile Remove="Service\IAdvertisementService.cs" />
     <Compile Remove="Model\AdvertisementRepository.cs" />
